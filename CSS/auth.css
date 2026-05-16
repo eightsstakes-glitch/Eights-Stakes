@@ -1,0 +1,275 @@
+/* =========================
+   SCREEN
+========================= */
+
+.auth-screen {
+
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+
+  position: relative;
+
+}
+
+/* =========================
+   CARD
+========================= */
+
+.auth-card {
+
+  width: 100%;
+  max-width: 520px;
+
+  padding: 36px;
+
+  border-radius:
+    var(--radius-xl);
+
+  position: relative;
+
+  overflow: hidden;
+
+}
+
+.auth-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.04),
+      transparent
+    );
+
+  pointer-events: none;
+
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.auth-header {
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+.auth-label {
+
+  width: fit-content;
+
+  padding:
+    10px 18px;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  color:
+    var(--purple-light);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+}
+
+.auth-header h1 {
+
+  margin-top: 24px;
+
+  font-size: 44px;
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: -2px;
+
+  color:
+    white;
+
+}
+
+.auth-header p {
+
+  margin-top: 16px;
+
+  color:
+    var(--muted);
+
+  font-size: 16px;
+
+  line-height: 1.7;
+
+}
+
+/* =========================
+   TABS
+========================= */
+
+.auth-tabs {
+
+  margin-top: 34px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 14px;
+
+}
+
+.auth-tab {
+
+  height: 58px;
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  color:
+    var(--muted);
+
+  font-size: 15px;
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+
+  transition:
+    var(--transition);
+
+}
+
+.auth-tab:hover {
+
+  background:
+    rgba(255,255,255,0.08);
+
+}
+
+.auth-tab.active {
+
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #6d28d9
+    );
+
+  color:
+    white;
+
+  border-color:
+    transparent;
+
+  box-shadow:
+    0 12px 30px rgba(139,92,246,0.3);
+
+}
+
+/* =========================
+   FORM
+========================= */
+
+.auth-form {
+
+  margin-top: 28px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+}
+
+.hidden {
+
+  display: none;
+
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.auth-message {
+
+  margin-top: 22px;
+
+  min-height: 24px;
+
+  color:
+    var(--purple-light);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-align: center;
+
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.auth-footer {
+
+  margin-top: 26px;
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 640px) {
+
+  .auth-screen {
+
+    padding: 20px;
+
+  }
+
+  .auth-card {
+
+    padding: 26px;
+
+  }
+
+  .auth-header h1 {
+
+    font-size: 34px;
+
+  }
+
+}

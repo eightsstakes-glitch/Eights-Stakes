@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Settings • Eights & Stakes
+  </title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="CSS/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="CSS/settings.css"
+  >
+
+</head>
+<body>
+
+  <!-- =========================
+       BACKGROUND LIGHTS
+  ========================== -->
+
+  <div class="bg-light bg-light-1"></div>
+  <div class="bg-light bg-light-2"></div>
+
+  <!-- =========================
+       SETTINGS SCREEN
+  ========================== -->
+
+  <main class="settings-screen">
+
+    <section
+      class="settings-card glass-panel"
+    >
+
+      <!-- =========================
+           HEADER
+      ========================== -->
+
+      <div class="settings-header">
+
+        <div class="settings-label">
+          PRISM GAMES
+        </div>
+
+        <h1>
+          SETTINGS
+        </h1>
+
+        <p>
+          Customize your profile and
+          manage your Eights & Stakes
+          account.
+        </p>
+
+      </div>
+
+      <!-- =========================
+           PROFILE SECTION
+      ========================== -->
+
+      <section class="settings-section">
+
+        <div class="section-title">
+
+          <span>
+            PROFILE
+          </span>
+
+        </div>
+
+        <div class="profile-preview">
+
+          <!-- AVATAR -->
+
+          <div
+            class="profile-avatar"
+            id="profile-avatar"
+          >
+            G
+          </div>
+
+          <!-- INFO -->
+
+          <div class="profile-info">
+
+            <div
+              class="profile-username"
+              id="profile-username"
+            >
+              GUEST
+            </div>
+
+            <div
+              class="profile-email"
+              id="profile-email"
+            >
+              No email
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================
+           USERNAME SECTION
+      ========================== -->
+
+      <section class="settings-section">
+
+        <div class="section-title">
+
+          <span>
+            CHANGE USERNAME
+          </span>
+
+        </div>
+
+        <form
+          id="username-form"
+          class="settings-form"
+        >
+
+          <input
+            type="text"
+            id="username-input"
+            class="input"
+            placeholder="New username"
+            maxlength="16"
+            required
+          >
+
+          <button
+            type="submit"
+            class="primary-btn"
+          >
+            SAVE USERNAME
+          </button>
+
+        </form>
+
+      </section>
+
+      <!-- =========================
+           ACCOUNT SECTION
+      ========================== -->
+
+      <section class="settings-section">
+
+        <div class="section-title">
+
+          <span>
+            ACCOUNT
+          </span>
+
+        </div>
+
+        <div class="settings-actions">
+
+          <button
+            id="logout-btn"
+            class="danger-btn"
+            type="button"
+          >
+            LOGOUT
+          </button>
+
+          <button
+            id="back-btn"
+            class="secondary-btn"
+            type="button"
+          >
+            BACK TO MENU
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- =========================
+           MESSAGE
+      ========================== -->
+
+      <div
+        class="settings-message"
+        id="settings-message"
+      ></div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================
+       SUPABASE
+  ========================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="JS/supabase.js"></script>
+
+  <!-- =========================
+       SETTINGS
+  ========================== -->
+
+  <script src="JS/settings.js"></script>
+
+</body>
+</html>

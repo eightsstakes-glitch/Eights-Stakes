@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Room • Eights & Stakes
+  </title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="CSS/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="CSS/room.css"
+  >
+
+</head>
+<body>
+
+  <!-- =========================
+       BACKGROUND LIGHTS
+  ========================== -->
+
+  <div class="bg-light bg-light-1"></div>
+  <div class="bg-light bg-light-2"></div>
+
+  <!-- =========================
+       SCREEN
+  ========================== -->
+
+  <main class="room-screen">
+
+    <section
+      class="room-card glass-panel"
+    >
+
+      <!-- =========================
+           HEADER
+      ========================== -->
+
+      <div class="room-header">
+
+        <div>
+
+          <div class="room-label">
+            MULTIPLAYER ROOM
+          </div>
+
+          <h1>
+            ROOM
+          </h1>
+
+        </div>
+
+        <div class="room-code-box">
+
+          <span>
+            ROOM CODE
+          </span>
+
+          <h2 id="room-code">
+            ------
+          </h2>
+
+        </div>
+
+      </div>
+
+      <!-- =========================
+           STATUS BAR
+      ========================== -->
+
+      <div class="room-status-bar">
+
+        <div class="status-item">
+
+          <div class="status-dot"></div>
+
+          <span>
+            LIVE
+          </span>
+
+        </div>
+
+        <div class="status-item">
+
+          PLAYERS:
+          <span id="player-count">
+            0 / 6
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- =========================
+           PLAYER LIST
+      ========================== -->
+
+      <div
+        class="player-list"
+        id="player-list"
+      >
+
+        <!-- PLAYERS INSERT HERE -->
+
+      </div>
+
+      <!-- =========================
+           ROOM ACTIONS
+      ========================== -->
+
+      <div class="room-actions">
+
+        <button
+          class="primary-btn"
+          id="ready-btn"
+          type="button"
+        >
+          READY
+        </button>
+
+        <button
+          class="primary-btn"
+          id="start-btn"
+          type="button"
+        >
+          START GAME
+        </button>
+
+        <button
+          class="secondary-btn"
+          id="leave-btn"
+          type="button"
+        >
+          LEAVE ROOM
+        </button>
+
+      </div>
+
+      <!-- =========================
+           FOOTER
+      ========================== -->
+
+      <div class="room-footer">
+
+        <div class="footer-info">
+
+          Waiting for players
+          to ready up...
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================
+       SUPABASE
+  ========================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- =========================
+       JS
+  ========================== -->
+
+  <script src="JS/supabase.js"></script>
+
+  <script src="JS/room.js"></script>
+
+</body>
+</html>

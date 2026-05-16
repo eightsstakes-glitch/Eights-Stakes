@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Multiplayer Lobby</title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="CSS/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="CSS/lobby.css"
+  >
+
+</head>
+<body>
+
+  <!-- BACKGROUND LIGHTS -->
+
+  <div class="bg-light bg-light-1"></div>
+  <div class="bg-light bg-light-2"></div>
+
+  <!-- SCREEN -->
+
+  <main class="lobby-screen">
+
+    <section
+      class="lobby-card glass-panel"
+    >
+
+      <!-- HEADER -->
+
+      <div class="lobby-header">
+
+        <h1>
+          MULTIPLAYER
+        </h1>
+
+        <p>
+          Create a room or join
+          your friends online.
+        </p>
+
+      </div>
+
+      <!-- CREATE ROOM -->
+
+      <div class="multiplayer-section">
+
+        <h2>
+          CREATE ROOM
+        </h2>
+
+        <select
+          id="max-players"
+          class="input"
+        >
+
+          <option value="2">
+            2 PLAYERS
+          </option>
+
+          <option value="3">
+            3 PLAYERS
+          </option>
+
+          <option value="4">
+            4 PLAYERS
+          </option>
+
+          <option value="5">
+            5 PLAYERS
+          </option>
+
+          <option value="6">
+            6 PLAYERS
+          </option>
+
+        </select>
+
+        <button
+          class="primary-btn"
+          id="create-room-btn"
+        >
+          CREATE ROOM
+        </button>
+
+      </div>
+
+      <!-- JOIN ROOM -->
+
+      <div class="multiplayer-section">
+
+        <h2>
+          JOIN ROOM
+        </h2>
+
+        <input
+          type="text"
+          id="room-code"
+          class="input"
+          placeholder="ENTER ROOM CODE"
+        >
+
+        <button
+          class="primary-btn"
+          id="join-room-btn"
+        >
+          JOIN ROOM
+        </button>
+
+      </div>
+
+      <!-- ROOM PREVIEW -->
+
+      <div class="room-preview glass-panel">
+
+        <div class="room-preview-header">
+
+          <span>
+            ROOM STATUS
+          </span>
+
+          <div class="online-dot"></div>
+
+        </div>
+
+        <div class="room-preview-content">
+
+          <div class="room-stat">
+
+            <h3>
+              PLAYERS
+            </h3>
+
+            <p id="preview-players">
+              0 / 6
+            </p>
+
+          </div>
+
+          <div class="room-stat">
+
+            <h3>
+              MODE
+            </h3>
+
+            <p>
+              CLASSIC
+            </p>
+
+          </div>
+
+          <div class="room-stat">
+
+            <h3>
+              REGION
+            </h3>
+
+            <p>
+              EU
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+
+      <div class="lobby-footer">
+
+        <button
+          class="secondary-btn"
+          id="back-btn"
+        >
+          BACK
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- JS -->
+
+  <script src="JS/supabase.js"></script>
+
+  <script src="JS/multiplayerLobby.js"></script>
+
+</body>
+</html>

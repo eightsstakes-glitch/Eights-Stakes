@@ -1,0 +1,575 @@
+/* =========================
+   SCREEN
+========================= */
+
+.menu-screen {
+
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+
+  position: relative;
+
+}
+
+/* =========================
+   WRAPPER
+========================= */
+
+.menu-wrapper {
+
+  width: 100%;
+  max-width: 1280px;
+
+  display: grid;
+
+  grid-template-columns:
+    1.1fr 0.9fr;
+
+  gap: 60px;
+
+  align-items: center;
+
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero-side {
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+.mini-label {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding:
+    10px 18px;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  color:
+    var(--purple-light);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  backdrop-filter:
+    blur(10px);
+
+}
+
+.game-title {
+
+  margin-top: 24px;
+
+  font-size: 120px;
+  font-weight: 900;
+
+  line-height: 0.88;
+
+  letter-spacing: -6px;
+
+  color:
+    white;
+
+  text-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+
+}
+
+.game-title span {
+
+  color:
+    var(--purple);
+
+  text-shadow:
+    0 0 40px rgba(139,92,246,0.45);
+
+}
+
+.hero-description {
+
+  margin-top: 28px;
+
+  max-width: 560px;
+
+  color:
+    var(--muted);
+
+  font-size: 20px;
+
+  line-height: 1.7;
+
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.feature-row {
+
+  margin-top: 34px;
+
+  display: flex;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+
+}
+
+.feature-chip {
+
+  padding:
+    12px 16px;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  color:
+    var(--muted);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+
+  transition:
+    var(--transition);
+
+}
+
+.feature-chip:hover {
+
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(139,92,246,0.35);
+
+  box-shadow:
+    0 0 20px rgba(139,92,246,0.15);
+
+}
+
+/* =========================
+   MENU CARD
+========================= */
+
+.menu-card {
+
+  padding: 34px;
+
+  border-radius:
+    var(--radius-xl);
+
+  position: relative;
+
+  overflow: hidden;
+
+}
+
+.menu-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.03),
+      transparent
+    );
+
+  pointer-events: none;
+
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.menu-card-header {
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-bottom: 28px;
+
+}
+
+.online-indicator {
+
+  width: fit-content;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding:
+    10px 14px;
+
+  margin-bottom: 22px;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(34,197,94,0.08);
+
+  border:
+    1px solid rgba(34,197,94,0.18);
+
+  color:
+    #4ade80;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+}
+
+.online-dot {
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background:
+    #4ade80;
+
+  box-shadow:
+    0 0 16px rgba(74,222,128,0.8);
+
+}
+
+.menu-card-header h2 {
+
+  font-size: 34px;
+  font-weight: 800;
+
+  color:
+    white;
+
+}
+
+.menu-card-header p {
+
+  margin-top: 10px;
+
+  color:
+    var(--muted);
+
+  font-size: 16px;
+
+  line-height: 1.6;
+
+}
+
+/* =========================
+   ACCOUNT PANEL
+========================= */
+
+.account-panel {
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 28px;
+
+  padding: 18px;
+
+  border-radius:
+    24px;
+
+  background:
+    rgba(255,255,255,0.035);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+}
+
+.account-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+}
+
+.account-avatar {
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #6d28d9
+    );
+
+  color:
+    white;
+
+  font-size: 22px;
+  font-weight: 800;
+
+  box-shadow:
+    0 0 25px rgba(139,92,246,0.35);
+
+}
+
+.account-info {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+}
+
+.account-label {
+
+  color:
+    var(--muted);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+}
+
+.account-name {
+
+  color:
+    white;
+
+  font-size: 17px;
+  font-weight: 700;
+
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.menu-buttons {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.menu-footer {
+
+  margin-top: 28px;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+}
+
+.footer-status {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color:
+    var(--muted);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+}
+
+.footer-status-dot {
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background:
+    #22c55e;
+
+  box-shadow:
+    0 0 14px rgba(34,197,94,0.7);
+
+}
+
+.footer-version {
+
+  color:
+    rgba(255,255,255,0.28);
+
+  font-size: 13px;
+  font-weight: 700;
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 980px) {
+
+  .menu-wrapper {
+
+    grid-template-columns:
+      1fr;
+
+    gap: 42px;
+
+  }
+
+  .hero-side {
+
+    text-align: center;
+
+  }
+
+  .hero-description {
+
+    margin-inline: auto;
+
+  }
+
+  .feature-row {
+
+    justify-content: center;
+
+  }
+
+  .game-title {
+
+    font-size: 78px;
+
+    letter-spacing: -3px;
+
+  }
+
+}
+
+@media (max-width: 640px) {
+
+  .menu-screen {
+
+    padding: 22px;
+
+  }
+
+  .menu-card {
+
+    padding: 24px;
+
+  }
+
+  .game-title {
+
+    font-size: 58px;
+
+    line-height: 0.95;
+
+  }
+
+  .hero-description {
+
+    font-size: 17px;
+
+  }
+
+  .account-panel {
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+  }
+
+  .menu-footer {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+  }
+
+}

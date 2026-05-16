@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Eights & Stakes Multiplayer</title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="CSS/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="CSS/game.css"
+  >
+
+</head>
+<body>
+
+  <!-- BACKGROUND LIGHTS -->
+
+  <div class="bg-light bg-light-1"></div>
+
+  <div class="bg-light bg-light-2"></div>
+
+  <!-- =========================
+       GAME TABLE
+  ========================== -->
+
+  <main id="game-table">
+
+    <!-- =========================
+         TOP UI
+    ========================== -->
+
+    <section id="top-ui">
+
+      <!-- LEFT -->
+
+      <div class="top-ui-left">
+
+        <div class="game-mode-badge">
+
+          ONLINE MULTIPLAYER
+
+        </div>
+
+        <div class="room-code">
+
+          ROOM:
+
+          <span id="room-id">
+
+            LOADING
+
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- CENTER -->
+
+      <div class="top-ui-center">
+
+        <div id="turn-indicator">
+
+          CONNECTING...
+
+        </div>
+
+        <div id="turn-subtext">
+
+          Waiting for realtime sync.
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="top-ui-right">
+
+        <button
+          id="leave-btn"
+          class="secondary-btn"
+        >
+
+          LEAVE
+
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         PLAY AREA
+    ========================== -->
+
+    <section id="players-area">
+
+      <!-- TOP PLAYERS -->
+
+      <div id="top-players">
+
+      </div>
+
+      <!-- LEFT PLAYER -->
+
+      <div id="left-player">
+
+      </div>
+
+      <!-- RIGHT PLAYER -->
+
+      <div id="right-player">
+
+      </div>
+
+      <!-- CENTER -->
+
+      <section id="center-area">
+
+        <!-- DRAW -->
+
+        <div
+          class="pile"
+          id="draw-pile"
+        >
+
+          <div class="pile-glow"></div>
+
+          <div class="pile-label">
+
+            DRAW
+
+          </div>
+
+          <div
+            class="pile-count"
+            id="draw-count"
+          >
+
+            0
+
+          </div>
+
+        </div>
+
+        <!-- CENTER INFO -->
+
+        <div id="center-info">
+
+          <div id="stack-indicator">
+
+            NO STACK
+
+          </div>
+
+          <div id="current-suit-display">
+
+            CURRENT SUIT:
+
+            <span id="current-suit">
+
+              ♠
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- DISCARD -->
+
+        <div
+          class="pile"
+          id="discard-pile"
+        >
+
+        </div>
+
+      </section>
+
+    </section>
+
+    <!-- =========================
+         PLAYER AREA
+    ========================== -->
+
+    <section id="bottom-player-area">
+
+      <!-- PLAYER HEADER -->
+
+      <div id="bottom-player-header">
+
+        <div class="player-profile">
+
+          <div class="player-avatar">
+
+            Y
+
+          </div>
+
+          <div class="player-text">
+
+            <h2>
+
+              YOU
+
+            </h2>
+
+            <span id="player-card-count">
+
+              0 CARDS
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- LAST CARD -->
+
+        <div id="last-card-warning">
+
+          LAST CARD
+
+        </div>
+
+      </div>
+
+      <!-- PLAYER HAND -->
+
+      <div
+        class="player-hand"
+        id="player-hand"
+      >
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         SUIT PICKER
+    ========================== -->
+
+    <div id="suit-picker">
+
+      <div class="suit-picker-box glass-panel">
+
+        <h2>
+
+          CHOOSE SUIT
+
+        </h2>
+
+        <p>
+
+          Select a suit.
+
+        </p>
+
+        <div class="suit-grid">
+
+          <button
+            class="suit-btn"
+            data-suit="♠"
+          >
+
+            ♠
+
+          </button>
+
+          <button
+            class="suit-btn"
+            data-suit="♥"
+          >
+
+            ♥
+
+          </button>
+
+          <button
+            class="suit-btn"
+            data-suit="♦"
+          >
+
+            ♦
+
+          </button>
+
+          <button
+            class="suit-btn"
+            data-suit="♣"
+          >
+
+            ♣
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================
+         WIN SCREEN
+    ========================== -->
+
+    <div id="win-screen">
+
+      <div class="win-screen-box glass-panel">
+
+        <div class="win-icon">
+
+          ♛
+
+        </div>
+
+        <h1 id="win-title">
+
+          PLAYER WINS
+
+        </h1>
+
+        <p id="win-description">
+
+          Match completed.
+
+        </p>
+
+        <div class="win-buttons">
+
+          <button
+            class="primary-btn"
+            id="play-again-btn"
+          >
+
+            PLAY AGAIN
+
+          </button>
+
+          <button
+            class="secondary-btn"
+            id="return-menu-btn"
+          >
+
+            RETURN TO MENU
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- =========================
+         LOADING
+    ========================== -->
+
+    <div id="loading-overlay">
+
+      <div class="loading-box glass-panel">
+
+        <div class="loading-spinner"></div>
+
+        <h2>
+
+          CONNECTING
+
+        </h2>
+
+        <p>
+
+          Joining realtime room...
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- JS -->
+
+  <script src="JS/supabase.js"></script>
+
+  <script src="JS/cards.js"></script>
+
+  <script src="JS/multiplayerGame.js"></script>
+
+</body>
+</html>

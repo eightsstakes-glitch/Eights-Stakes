@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Eights & Stakes
+  </title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="CSS/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="CSS/menu.css"
+  >
+
+</head>
+<body>
+
+  <!-- =========================
+       BACKGROUND LIGHTS
+  ========================== -->
+
+  <div class="bg-light bg-light-1"></div>
+  <div class="bg-light bg-light-2"></div>
+
+  <!-- =========================
+       SCREEN
+  ========================== -->
+
+  <main class="menu-screen">
+
+    <div class="menu-wrapper">
+
+      <!-- =========================
+           LEFT SIDE
+      ========================== -->
+
+      <section class="hero-side">
+
+        <div class="mini-label">
+          PRISM GAMES
+        </div>
+
+        <h1 class="game-title">
+
+          EIGHTS
+          <span>&</span>
+          STAKES
+
+        </h1>
+
+        <p class="hero-description">
+
+          A competitive neon card game
+          where strategy, chaos,
+          stacking and survival collide.
+
+        </p>
+
+        <!-- FEATURES -->
+
+        <div class="feature-row">
+
+          <div class="feature-chip">
+            ONLINE MULTIPLAYER
+          </div>
+
+          <div class="feature-chip">
+            STACKING SYSTEM
+          </div>
+
+          <div class="feature-chip">
+            2-6 PLAYERS
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================
+           RIGHT SIDE
+      ========================== -->
+
+      <section
+        class="menu-card glass-panel"
+      >
+
+        <!-- HEADER -->
+
+        <div class="menu-card-header">
+
+          <div
+            class="online-indicator"
+          >
+
+            <div
+              class="online-dot"
+            ></div>
+
+            ONLINE
+
+          </div>
+
+          <h2>
+            MAIN MENU
+          </h2>
+
+          <p id="menu-subtitle">
+            Choose your game mode.
+          </p>
+
+        </div>
+
+        <!-- ACCOUNT -->
+
+        <div
+          class="account-panel"
+          id="account-panel"
+        >
+
+          <div
+            class="account-left"
+          >
+
+            <div
+              class="account-avatar"
+              id="account-avatar"
+            >
+              G
+            </div>
+
+            <div
+              class="account-info"
+            >
+
+              <div
+                class="account-label"
+              >
+                ACCOUNT
+              </div>
+
+              <div
+                class="account-name"
+                id="account-name"
+              >
+                GUEST
+              </div>
+
+            </div>
+
+          </div>
+
+          <button
+            class="secondary-btn"
+            id="account-btn"
+            type="button"
+          >
+            LOGIN
+          </button>
+
+        </div>
+
+        <!-- BUTTONS -->
+
+        <div class="menu-buttons">
+
+          <button
+            class="primary-btn"
+            id="bots-btn"
+            type="button"
+          >
+            PLAY VS BOTS
+          </button>
+
+          <button
+            class="primary-btn"
+            id="multiplayer-btn"
+            type="button"
+          >
+            MULTIPLAYER
+          </button>
+
+          <button
+            class="secondary-btn"
+            id="rulebook-btn"
+            type="button"
+          >
+            RULEBOOK
+          </button>
+
+          <button
+            class="secondary-btn"
+            id="settings-btn"
+            type="button"
+          >
+            SETTINGS
+          </button>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="menu-footer">
+
+          <div class="footer-status">
+
+            <div
+              class="footer-status-dot"
+            ></div>
+
+            SERVERS ONLINE
+
+          </div>
+
+          <div class="footer-version">
+            BETA v0.1
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- =========================
+       SUPABASE
+  ========================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="JS/supabase.js"></script>
+
+  <!-- =========================
+       APP
+  ========================== -->
+
+  <script src="JS/app.js"></script>
+
+</body>
+</html>

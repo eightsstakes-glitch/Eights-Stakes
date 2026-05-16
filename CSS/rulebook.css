@@ -1,0 +1,296 @@
+/* =================================================
+   PAGE
+================================================= */
+
+.rulebook-page {
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding:
+    60px
+    40px
+    80px;
+
+  position: relative;
+  z-index: 2;
+
+}
+
+/* =================================================
+   HERO
+================================================= */
+
+.rulebook-hero {
+
+  padding:
+    70px
+    60px;
+
+  border-radius: 36px;
+
+  margin-bottom: 50px;
+
+  text-align: center;
+
+}
+
+.hero-mini {
+
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+
+  color:
+    rgba(255,255,255,0.6);
+
+  margin-bottom: 20px;
+
+}
+
+.hero-title {
+
+  font-size:
+    clamp(
+      4rem,
+      10vw,
+      8rem
+    );
+
+  font-weight: 900;
+  line-height: 0.9;
+
+  color: white;
+
+  margin-bottom: 20px;
+
+}
+
+.hero-title span {
+
+  color: #8b5cf6;
+
+}
+
+.hero-subtitle {
+
+  font-size: 1.2rem;
+
+  color:
+    rgba(255,255,255,0.75);
+
+  text-transform: uppercase;
+  letter-spacing: 3px;
+
+}
+
+/* =================================================
+   GRID
+================================================= */
+
+.rulebook-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(320px,1fr)
+    );
+
+  gap: 28px;
+
+}
+
+/* =================================================
+   CARD
+================================================= */
+
+.rule-card {
+
+  position: relative;
+
+  padding:
+    35px
+    32px;
+
+  border-radius: 28px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+
+}
+
+.rule-card:hover {
+
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(139,92,246,0.5);
+
+}
+
+.rule-number {
+
+  font-size: 0.9rem;
+
+  font-weight: 800;
+
+  color: #8b5cf6;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 16px;
+
+}
+
+.rule-card h2 {
+
+  font-size: 2rem;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  margin-bottom: 20px;
+
+  color: white;
+
+}
+
+.rule-card p,
+.rule-card li {
+
+  font-size: 1.05rem;
+  line-height: 1.7;
+
+  color:
+    rgba(255,255,255,0.78);
+
+}
+
+.rule-card ul {
+
+  padding-left: 20px;
+
+  margin-top: 10px;
+
+}
+
+/* =================================================
+   ACTION GRID
+================================================= */
+
+.large-card {
+
+  grid-column:
+    span 2;
+
+}
+
+.action-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(180px,1fr)
+    );
+
+  gap: 18px;
+
+}
+
+.action-item {
+
+  padding:
+    22px
+    18px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  text-align: center;
+
+  color: white;
+
+  font-weight: 700;
+
+}
+
+.action-item span {
+
+  display: block;
+
+  font-size: 1.6rem;
+  font-weight: 900;
+
+  color: #8b5cf6;
+
+  margin-bottom: 10px;
+
+}
+
+/* =================================================
+   FOOTER
+================================================= */
+
+.rulebook-footer {
+
+  display: flex;
+  justify-content: center;
+
+  margin-top: 50px;
+
+}
+
+/* =================================================
+   MOBILE
+================================================= */
+
+@media (max-width: 900px) {
+
+  .large-card {
+
+    grid-column:
+      span 1;
+
+  }
+
+  .rulebook-page {
+
+    padding:
+      30px
+      18px
+      50px;
+
+  }
+
+  .rulebook-hero {
+
+    padding:
+      50px
+      25px;
+
+  }
+
+  .rule-card {
+
+    padding:
+      28px
+      24px;
+
+  }
+
+}

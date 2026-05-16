@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>VS Bots</title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="CSS/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="CSS/lobby.css"
+  >
+
+</head>
+<body>
+
+  <!-- LIGHTS -->
+
+  <div class="bg-light bg-light-1"></div>
+  <div class="bg-light bg-light-2"></div>
+
+  <!-- SCREEN -->
+
+  <main class="lobby-screen">
+
+    <section
+      class="lobby-card glass-panel"
+    >
+
+      <!-- HEADER -->
+
+      <div class="lobby-header">
+
+        <h1>
+          VS BOTS
+        </h1>
+
+        <p>
+          Choose how many bots
+          you want to face.
+        </p>
+
+      </div>
+
+      <!-- GRID -->
+
+      <div class="bot-grid">
+
+        <button
+          class="bot-option"
+          data-bots="1"
+        >
+          <span>1 BOT</span>
+        </button>
+
+        <button
+          class="bot-option"
+          data-bots="2"
+        >
+          <span>2 BOTS</span>
+        </button>
+
+        <button
+          class="bot-option"
+          data-bots="3"
+        >
+          <span>3 BOTS</span>
+        </button>
+
+        <button
+          class="bot-option"
+          data-bots="4"
+        >
+          <span>4 BOTS</span>
+        </button>
+
+        <button
+          class="bot-option"
+          data-bots="5"
+        >
+          <span>5 BOTS</span>
+        </button>
+
+      </div>
+
+      <!-- FOOTER -->
+
+      <div class="lobby-footer">
+
+        <button
+          class="secondary-btn"
+          id="back-btn"
+        >
+          BACK
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- JS -->
+
+  <script src="JS/botLobby.js"></script>
+
+</body>
+</html>
