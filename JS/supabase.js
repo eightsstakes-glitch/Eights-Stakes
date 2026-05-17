@@ -8,96 +8,29 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhkdWpuenhmZWhjemh3bWtscGFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NzY1NzcsImV4cCI6MjA5NDQ1MjU3N30.LDNuPK5cdFrAyZCNVfUUGHPq5D6n1YvrwbSzBvvDBvI";
 
-const supabase =
+// =================================================
+// CLIENT
+// =================================================
+
+const supabaseClient =
   window.supabase.createClient(
+
     SUPABASE_URL,
+
     SUPABASE_ANON_KEY
+
   );
+
+// =================================================
+// GLOBAL ACCESS
+// =================================================
+
+window.supabase =
+  supabaseClient;
 
 // =================================================
 // AUTH
 // =================================================
-
-// SIGN UP
-
-async function signUp(
-  email,
-  password,
-  username
-) {
-
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await supabase.auth.signUp({
-        email,
-        password
-      });
-
-    if (error) {
-      throw error;
-    }
-
-    const user =
-      data.user;
-
-    // CREATE PROFILE
-
-    if (user) {
-
-      const {
-        error: profileError
-      } =
-        await supabase
-          .from("profiles")
-          .insert([
-            {
-              id:
-                user.id,
-
-              username:
-                username,
-
-              avatar:
-                "Y",
-
-              chips:
-                1000
-            }
-          ]);
-
-      if (profileError) {
-        console.error(
-          "Profile creation error:",
-          profileError
-        );
-      }
-
-    }
-
-    return {
-      success: true,
-      data
-    };
-
-  } catch (err) {
-
-    console.error(
-      "Signup error:",
-      err.message
-    );
-
-    return {
-      success: false,
-      error: err.message
-    };
-
-  }
-
-}
 
 // LOGIN
 
@@ -112,10 +45,13 @@ async function login(
       data,
       error
     } =
-      await supabase.auth
+      await window.supabase
+        .auth
         .signInWithPassword({
+
           email,
           password
+
         });
 
     if (error) {
@@ -123,11 +59,16 @@ async function login(
     }
 
     return {
+
       success: true,
+
       data
+
     };
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.error(
       "Login error:",
@@ -135,8 +76,12 @@ async function login(
     );
 
     return {
+
       success: false,
-      error: err.message
+
+      error:
+        err.message
+
     };
 
   }
@@ -150,7 +95,8 @@ async function logout() {
   const {
     error
   } =
-    await supabase.auth
+    await window.supabase
+      .auth
       .signOut();
 
   if (error) {
@@ -164,7 +110,9 @@ async function logout() {
 
 }
 
-// GET CURRENT USER
+// =================================================
+// SESSION
+// =================================================
 
 async function getCurrentUser() {
 
@@ -172,13 +120,13 @@ async function getCurrentUser() {
     data,
     error
   } =
-    await supabase.auth
+    await window.supabase
+      .auth
       .getUser();
 
   if (error) {
 
     console.error(
-      "Get user error:",
       error.message
     );
 
@@ -190,21 +138,19 @@ async function getCurrentUser() {
 
 }
 
-// GET SESSION
-
 async function getSession() {
 
   const {
     data,
     error
   } =
-    await supabase.auth
+    await window.supabase
+      .auth
       .getSession();
 
   if (error) {
 
     console.error(
-      "Session error:",
       error.message
     );
 
@@ -217,10 +163,8 @@ async function getSession() {
 }
 
 // =================================================
-// PROFILE HELPERS
+// PROFILE
 // =================================================
-
-// GET PROFILE
 
 async function getProfile(
   userId
@@ -232,7 +176,7 @@ async function getProfile(
       data,
       error
     } =
-      await supabase
+      await window.supabase
         .from("profiles")
         .select("*")
         .eq(
@@ -247,10 +191,11 @@ async function getProfile(
 
     return data;
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.error(
-      "Get profile error:",
       err.message
     );
 
@@ -259,8 +204,6 @@ async function getProfile(
   }
 
 }
-
-// UPDATE PROFILE
 
 async function updateProfile(
   userId,
@@ -272,7 +215,7 @@ async function updateProfile(
     const {
       error
     } =
-      await supabase
+      await window.supabase
         .from("profiles")
         .update(updates)
         .eq(
@@ -286,10 +229,11 @@ async function updateProfile(
 
     return true;
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.error(
-      "Update profile error:",
       err.message
     );
 
@@ -302,8 +246,6 @@ async function updateProfile(
 // =================================================
 // ROOM HELPERS
 // =================================================
-
-// GENERATE ROOM CODE
 
 function generateRoomCode() {
 
@@ -320,10 +262,12 @@ function generateRoomCode() {
 
     code +=
       chars.charAt(
+
         Math.floor(
           Math.random() *
           chars.length
         )
+
       );
 
   }
@@ -331,8 +275,6 @@ function generateRoomCode() {
   return code;
 
 }
-
-// CREATE ROOM
 
 async function createRoom(
   hostId
@@ -347,10 +289,12 @@ async function createRoom(
       data,
       error
     } =
-      await supabase
+      await window.supabase
         .from("rooms")
         .insert([
+
           {
+
             room_code:
               roomCode,
 
@@ -359,7 +303,9 @@ async function createRoom(
 
             status:
               "waiting"
+
           }
+
         ])
         .select()
         .single();
@@ -369,27 +315,33 @@ async function createRoom(
     }
 
     return {
+
       success: true,
+
       room: data
+
     };
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.error(
-      "Create room error:",
       err.message
     );
 
     return {
+
       success: false,
-      error: err.message
+
+      error:
+        err.message
+
     };
 
   }
 
 }
-
-// JOIN ROOM
 
 async function joinRoom(
   roomCode,
@@ -398,13 +350,11 @@ async function joinRoom(
 
   try {
 
-    // FIND ROOM
-
     const {
       data: room,
       error: roomError
     } =
-      await supabase
+      await window.supabase
         .from("rooms")
         .select("*")
         .eq(
@@ -417,15 +367,15 @@ async function joinRoom(
       throw roomError;
     }
 
-    // JOIN ROOM
-
     const {
       error: joinError
     } =
-      await supabase
+      await window.supabase
         .from("room_players")
         .insert([
+
           {
+
             room_id:
               room.id,
 
@@ -434,7 +384,9 @@ async function joinRoom(
 
             ready:
               false
+
           }
+
         ]);
 
     if (joinError) {
@@ -442,20 +394,28 @@ async function joinRoom(
     }
 
     return {
+
       success: true,
+
       room
+
     };
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.error(
-      "Join room error:",
       err.message
     );
 
     return {
+
       success: false,
-      error: err.message
+
+      error:
+        err.message
+
     };
 
   }
@@ -463,56 +423,62 @@ async function joinRoom(
 }
 
 // =================================================
-// REALTIME PLACEHOLDERS
+// REALTIME
 // =================================================
-
-// ROOM SUBSCRIPTION
 
 function subscribeToRoom(
   roomId,
   callback
 ) {
 
-  return supabase
+  return window.supabase
     .channel(
       `room-${roomId}`
     )
     .on(
       "postgres_changes",
       {
+
         event: "*",
+
         schema: "public",
+
         table:
           "room_players",
+
         filter:
           `room_id=eq.${roomId}`
+
       },
       callback
     )
     .subscribe();
 
 }
-
-// GAME STATE SUBSCRIPTION
 
 function subscribeToGameState(
   roomId,
   callback
 ) {
 
-  return supabase
+  return window.supabase
     .channel(
       `game-${roomId}`
     )
     .on(
       "postgres_changes",
       {
+
         event: "*",
+
         schema: "public",
+
         table:
           "game_state",
+
         filter:
           `room_id=eq.${roomId}`
+
       },
       callback
     )
@@ -521,15 +487,11 @@ function subscribeToGameState(
 }
 
 // =================================================
-// GLOBAL ACCESS
+// GLOBAL HELPERS
 // =================================================
-
-window.supabaseClient =
-  supabase;
 
 window.supabaseHelpers = {
 
-  signUp,
   login,
   logout,
 

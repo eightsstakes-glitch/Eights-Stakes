@@ -1,476 +1,478 @@
-// =========================
-// ELEMENTS
-// =========================
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
 
-const loginTab =
-  document.getElementById(
-    "login-tab"
-  );
-
-const signupTab =
-  document.getElementById(
-    "signup-tab"
-  );
-
-const loginForm =
-  document.getElementById(
-    "login-form"
-  );
-
-const signupForm =
-  document.getElementById(
-    "signup-form"
-  );
-
-const authMessage =
-  document.getElementById(
-    "auth-message"
-  );
-
-const backBtn =
-  document.getElementById(
-    "back-btn"
-  );
-
-// LOGIN
-
-const loginEmail =
-  document.getElementById(
-    "login-email"
-  );
-
-const loginPassword =
-  document.getElementById(
-    "login-password"
-  );
-
-// SIGNUP
-
-const signupUsername =
-  document.getElementById(
-    "signup-username"
-  );
-
-const signupEmail =
-  document.getElementById(
-    "signup-email"
-  );
-
-const signupPassword =
-  document.getElementById(
-    "signup-password"
-  );
-
-// =========================
-// GLOBAL PROFILE
-// =========================
-
-window.currentProfile = null;
-
-// =========================
-// TAB SWITCHING
-// =========================
-
-loginTab.addEventListener(
-  "click",
-  () => {
-
-    loginTab.classList.add(
-      "active"
-    );
-
-    signupTab.classList.remove(
-      "active"
-    );
-
-    loginForm.classList.remove(
-      "hidden"
-    );
-
-    signupForm.classList.add(
-      "hidden"
-    );
-
-    clearMessage();
-
-  }
-);
-
-signupTab.addEventListener(
-  "click",
-  () => {
-
-    signupTab.classList.add(
-      "active"
-    );
-
-    loginTab.classList.remove(
-      "active"
-    );
-
-    signupForm.classList.remove(
-      "hidden"
-    );
-
-    loginForm.classList.add(
-      "hidden"
-    );
-
-    clearMessage();
-
-  }
-);
-
-// =========================
-// MESSAGE
-// =========================
-
-function showMessage(
-  text,
-  success = false
-) {
-
-  authMessage.innerText =
-    text;
-
-  authMessage.style.color =
-    success
-      ? "#4ade80"
-      : "#f87171";
-
-}
-
-function clearMessage() {
-
-  authMessage.innerText = "";
-
-}
-
-// =========================
-// LOAD PROFILE
-// =========================
-
-async function loadProfile() {
-
-  const {
-    data: { user },
-    error: userError
-  } =
-    await supabase.auth.getUser();
-
-  if (
-    userError ||
-    !user
-  ) {
-
-    return null;
-
-  }
-
-  const {
-    data: profile,
-    error: profileError
-  } =
-    await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .single();
-
-  if (
-    profileError
-  ) {
-
-    console.error(
-      profileError.message
-    );
-
-    return null;
-
-  }
-
-  window.currentProfile =
-    profile;
-
-  return profile;
-
-}
-
-// =========================
-// LOGIN
-// =========================
-
-loginForm.addEventListener(
-  "submit",
-  async (e) => {
-
-    e.preventDefault();
-
-    clearMessage();
-
-    const email =
-      loginEmail.value.trim();
-
-    const password =
-      loginPassword.value.trim();
-
-    if (
-      !email ||
-      !password
-    ) {
-
-      showMessage(
-        "Fill in all fields."
-      );
-
-      return;
-
-    }
+    // =========================
+    // FIX BROKEN SESSION LOOP
+    // =========================
 
     const {
-      error
+      data: { session }
     } =
       await supabase.auth
-        .signInWithPassword({
+        .getSession();
 
-          email,
-          password
+    if (session) {
 
-        });
+      const {
+        data: profile
+      } =
+        await supabase
+          .from("profiles")
+          .select("*")
+          .eq(
+            "id",
+            session.user.id
+          )
+          .maybeSingle();
 
-    if (error) {
+      // ONLY REDIRECT
+      // IF PROFILE EXISTS
 
-      showMessage(
-        error.message
-      );
+      if (profile) {
 
-      return;
+        window.location.href =
+          "multiplayer-lobby.html";
+
+        return;
+
+      }
+
+      // BROKEN SESSION
+
+      await supabase.auth
+        .signOut();
 
     }
 
-    // LOAD PROFILE
+    // =========================
+    // ELEMENTS
+    // =========================
 
-    const profile =
-      await loadProfile();
-
-    if (!profile) {
-
-      showMessage(
-        "Could not load profile."
+    const loginTab =
+      document.getElementById(
+        "login-tab"
       );
 
-      return;
+    const signupTab =
+      document.getElementById(
+        "signup-tab"
+      );
+
+    const loginForm =
+      document.getElementById(
+        "login-form"
+      );
+
+    const signupForm =
+      document.getElementById(
+        "signup-form"
+      );
+
+    const authMessage =
+      document.getElementById(
+        "auth-message"
+      );
+
+    const backBtn =
+      document.getElementById(
+        "back-btn"
+      );
+
+    // LOGIN
+
+    const loginEmail =
+      document.getElementById(
+        "login-email"
+      );
+
+    const loginPassword =
+      document.getElementById(
+        "login-password"
+      );
+
+    // SIGNUP
+
+    const signupUsername =
+      document.getElementById(
+        "signup-username"
+      );
+
+    const signupEmail =
+      document.getElementById(
+        "signup-email"
+      );
+
+    const signupPassword =
+      document.getElementById(
+        "signup-password"
+      );
+
+    // =========================
+    // MESSAGE
+    // =========================
+
+    function showMessage(
+      text,
+      success = false
+    ) {
+
+      authMessage.innerText =
+        text;
+
+      authMessage.style.color =
+        success
+          ? "#4ade80"
+          : "#f87171";
 
     }
 
-    showMessage(
-      `Welcome back, ${profile.username}!`,
-      true
+    function clearMessage() {
+
+      authMessage.innerText =
+        "";
+
+    }
+
+    // =========================
+    // TAB SWITCHING
+    // =========================
+
+    loginTab.addEventListener(
+      "click",
+      () => {
+
+        loginTab.classList.add(
+          "active"
+        );
+
+        signupTab.classList.remove(
+          "active"
+        );
+
+        loginForm.classList.remove(
+          "hidden"
+        );
+
+        signupForm.classList.add(
+          "hidden"
+        );
+
+        clearMessage();
+
+      }
     );
 
-    setTimeout(() => {
+    signupTab.addEventListener(
+      "click",
+      () => {
 
-      window.location.href =
-        "multiplayer-lobby.html";
+        signupTab.classList.add(
+          "active"
+        );
 
-    }, 1000);
+        loginTab.classList.remove(
+          "active"
+        );
 
-  }
-);
+        signupForm.classList.remove(
+          "hidden"
+        );
 
-// =========================
-// SIGNUP
-// =========================
+        loginForm.classList.add(
+          "hidden"
+        );
 
-signupForm.addEventListener(
-  "submit",
-  async (e) => {
+        clearMessage();
 
-    e.preventDefault();
+      }
+    );
 
-    clearMessage();
+    // =========================
+    // LOGIN
+    // =========================
 
-    const username =
-      signupUsername.value.trim();
+    loginForm.addEventListener(
+      "submit",
+      async (e) => {
 
-    const email =
-      signupEmail.value.trim();
+        e.preventDefault();
 
-    const password =
-      signupPassword.value.trim();
+        clearMessage();
 
-    if (
-      !username ||
-      !email ||
-      !password
-    ) {
+        const email =
+          loginEmail.value.trim();
 
-      showMessage(
-        "Fill in all fields."
-      );
+        const password =
+          loginPassword.value.trim();
 
-      return;
+        if (
+          !email ||
+          !password
+        ) {
 
-    }
+          showMessage(
+            "Fill in all fields."
+          );
 
-    // CHECK USERNAME
+          return;
 
-    const {
-      data: existingUser
-    } =
-      await supabase
-        .from("profiles")
-        .select("username")
-        .eq(
-          "username",
-          username
-        )
-        .maybeSingle();
+        }
 
-    if (
-      existingUser
-    ) {
+        const {
+          error
+        } =
+          await supabase.auth
+            .signInWithPassword({
 
-      showMessage(
-        "Username already taken."
-      );
+              email,
+              password
 
-      return;
+            });
 
-    }
+        if (error) {
 
-    // CREATE AUTH ACCOUNT
+          showMessage(
+            error.message
+          );
 
-    const {
-      data,
-      error
-    } =
-      await supabase.auth
-        .signUp({
+          return;
 
-          email,
-          password
+        }
 
-        });
+        showMessage(
+          "Login successful!",
+          true
+        );
 
-    if (error) {
+        setTimeout(() => {
 
-      showMessage(
-        error.message
-      );
+          window.location.href =
+            "multiplayer-lobby.html";
 
-      return;
+        }, 1000);
 
-    }
+      }
+    );
 
-    const user =
-      data.user;
+    // =========================
+    // SIGNUP
+    // =========================
 
-    if (!user) {
+    signupForm.addEventListener(
+      "submit",
+      async (e) => {
 
-      showMessage(
-        "Could not create user."
-      );
+        e.preventDefault();
 
-      return;
+        clearMessage();
 
-    }
+        const username =
+          signupUsername.value.trim();
 
-    // CREATE PROFILE
+        const email =
+          signupEmail.value.trim();
 
-    const {
-      error: profileError
-    } =
-      await supabase
-        .from("profiles")
-        .insert([
+        const password =
+          signupPassword.value.trim();
 
-          {
-            id:
-              user.id,
+        if (
+          !username ||
+          !email ||
+          !password
+        ) {
 
-            username:
-              username,
+          showMessage(
+            "Fill in all fields."
+          );
 
-            avatar:
+          return;
+
+        }
+
+        // =========================
+        // CHECK USERNAME
+        // =========================
+
+        const {
+          data: existingUser
+        } =
+          await supabase
+            .from("profiles")
+            .select("username")
+            .eq(
+              "username",
               username
-                .charAt(0)
-                .toUpperCase(),
+            )
+            .maybeSingle();
 
-            chips:
-              1000
-          }
+        if (
+          existingUser
+        ) {
 
-        ]);
+          showMessage(
+            "Username already taken."
+          );
 
-    if (
-      profileError
-    ) {
+          return;
 
-      showMessage(
-        profileError.message
-      );
+        }
 
-      return;
+        // =========================
+        // CREATE AUTH USER
+        // =========================
 
-    }
+        const {
+          data,
+          error
+        } =
+          await supabase.auth
+            .signUp({
 
-    // LOAD PROFILE
+              email,
+              password
 
-    await loadProfile();
+            });
 
-    showMessage(
-      "Account created successfully.",
-      true
+        if (error) {
+
+          showMessage(
+            error.message
+          );
+
+          return;
+
+        }
+
+        const user =
+          data.user;
+
+        if (!user) {
+
+          showMessage(
+            "Failed to create account."
+          );
+
+          return;
+
+        }
+
+        // =========================
+        // WAIT FOR SESSION
+        // =========================
+
+        await new Promise(
+
+          resolve =>
+
+            setTimeout(
+              resolve,
+              1500
+            )
+
+        );
+
+        // =========================
+        // CREATE PROFILE
+        // =========================
+
+        const {
+          error: profileError
+        } =
+          await supabase
+            .from("profiles")
+            .insert([
+
+              {
+
+                id:
+                  user.id,
+
+                username:
+                  username,
+
+                avatar:
+                  username
+                    .charAt(0)
+                    .toUpperCase(),
+
+                chips:
+                  1000
+
+              }
+
+            ]);
+
+        if (
+          profileError
+        ) {
+
+          console.error(
+            "PROFILE ERROR:",
+            profileError
+          );
+
+          showMessage(
+            profileError.message
+          );
+
+          return;
+
+        }
+
+        // =========================
+        // AUTO LOGIN
+        // =========================
+
+        const {
+          error: loginError
+        } =
+          await supabase.auth
+            .signInWithPassword({
+
+              email,
+              password
+
+            });
+
+        if (loginError) {
+
+          showMessage(
+            loginError.message
+          );
+
+          return;
+
+        }
+
+        showMessage(
+          "Account created!",
+          true
+        );
+
+        setTimeout(() => {
+
+          window.location.href =
+            "multiplayer-lobby.html";
+
+        }, 1000);
+
+      }
     );
 
-    setTimeout(() => {
+    // =========================
+    // BACK
+    // =========================
 
-      window.location.href =
-        "multiplayer-lobby.html";
+    backBtn.addEventListener(
+      "click",
+      () => {
 
-    }, 1200);
+        window.location.href =
+          "index.html";
 
-  }
-);
-
-// =========================
-// BACK
-// =========================
-
-backBtn.addEventListener(
-  "click",
-  () => {
-
-    window.location.href =
-      "index.html";
+      }
+    );
 
   }
 );
-
-// =========================
-// SESSION CHECK
-// =========================
-
-async function checkSession() {
-
-  const {
-    data
-  } =
-    await supabase.auth
-      .getSession();
-
-  if (
-    data.session
-  ) {
-
-    await loadProfile();
-
-    window.location.href =
-      "multiplayer-lobby.html";
-
-  }
-
-}
-
-checkSession();

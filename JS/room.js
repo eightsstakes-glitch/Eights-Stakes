@@ -367,12 +367,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   /* =========================
-     START GAME
-  ========================= */
+   START GAME
+========================= */
 
-  startBtn.addEventListener(
-    "click",
-    async () => {
+startBtn.addEventListener(
+  "click",
+  async () => {
+
+    try {
 
       const isHost =
         currentRoom.host_id ===
@@ -405,21 +407,43 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       /* CLEAN OLD */
 
-      await supabase
-        .from("game_state")
-        .delete()
-        .eq(
-          "room_id",
-          currentRoom.id
+      const {
+        error: deleteGameError
+      } =
+        await supabase
+          .from("game_state")
+          .delete()
+          .eq(
+            "room_id",
+            currentRoom.id
+          );
+
+      if (deleteGameError) {
+
+        console.error(
+          deleteGameError
         );
 
-      await supabase
-        .from("player_cards")
-        .delete()
-        .eq(
-          "room_id",
-          currentRoom.id
+      }
+
+      const {
+        error: deleteCardsError
+      } =
+        await supabase
+          .from("player_cards")
+          .delete()
+          .eq(
+            "room_id",
+            currentRoom.id
+          );
+
+      if (deleteCardsError) {
+
+        console.error(
+          deleteCardsError
         );
+
+      }
 
       /* CREATE DECK */
 
@@ -446,21 +470,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         }
 
-        await supabase
-          .from("player_cards")
-          .insert([
+        const {
+          error: cardInsertError
+        } =
+          await supabase
+            .from("player_cards")
+            .insert([
 
-            {
-              room_id:
-                currentRoom.id,
+              {
+                room_id:
+                  currentRoom.id,
 
-              player_id:
-                player.player_id,
+                player_id:
+                  player.player_id,
 
-              cards
-            }
+                cards
+              }
 
-          ]);
+            ]);
+
+        if (
+          cardInsertError
+        ) {
+
+          console.error(
+            cardInsertError
+          );
+
+          alert(
+            cardInsertError.message
+          );
+
+          return;
+
+        }
 
       }
 
@@ -492,62 +535,115 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       /* CREATE GAME */
 
-      await supabase
-        .from("game_state")
-        .insert([
+      const {
+        error: gameError
+      } =
+        await supabase
+          .from("game_state")
+          .insert([
 
-          {
-            room_id:
-              currentRoom.id,
+            {
+              room_id:
+                currentRoom.id,
 
-            current_turn:
-              players[0].player_id,
+              current_turn:
+                players[0].player_id,
 
-            direction:
-              1,
+              direction:
+                1,
 
-            current_suit:
-              firstCard.suit,
+              current_suit:
+                firstCard.suit,
 
-            current_card:
-              firstCard,
+              current_card:
+                firstCard,
 
-            draw_stack:
-              0,
+              draw_stack:
+                0,
 
-            discard_pile: [
-              firstCard
-            ],
+              discard_pile: [
+                firstCard
+              ],
 
-            draw_pile:
-              deck,
+              draw_pile:
+                deck,
 
-            winner_id:
-              null,
+              winner_id:
+                null,
 
-            started:
-              true
-          }
+              started:
+                true
+            }
 
-        ]);
+          ]);
+
+      if (gameError) {
+
+        console.error(
+          gameError
+        );
+
+        alert(
+          gameError.message
+        );
+
+        return;
+
+      }
 
       /* UPDATE ROOM */
 
-      await supabase
-        .from("rooms")
-        .update({
+      const {
+        error: roomError
+      } =
+        await supabase
+          .from("rooms")
+          .update({
 
-          status:
-            "playing"
+            status:
+              "playing"
 
-        })
-        .eq(
-          "id",
-          currentRoom.id
+          })
+          .eq(
+            "id",
+            currentRoom.id
+          );
+
+      if (roomError) {
+
+        console.error(
+          roomError
         );
 
+        alert(
+          roomError.message
+        );
+
+        return;
+
+      }
+
+      /* REDIRECT */
+
+      window.location.href =
+        `multiplayer-game.html?code=${roomCode}`;
+
     }
-  );
+
+    catch (err) {
+
+      console.error(
+        err
+      );
+
+      alert(
+        err.message
+      );
+
+    }
+
+  }
+);
 
   /* =========================
      LEAVE ROOM

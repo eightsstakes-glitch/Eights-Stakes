@@ -766,21 +766,31 @@ document.addEventListener("DOMContentLoaded", () => {
      PLAY CARD
   ========================= */
 
-  function playCard(
-    player,
-    cardIndex
+ function playCard(
+  player,
+  cardIndex
+) {
+
+  /* GAME OVER */
+
+  if (
+    gameState.winner
   ) {
 
-    const card =
-      player.cards[cardIndex];
+    return;
 
-    if (
-      !canPlayCard(card)
-    ) {
+  }
 
-      return;
+  const card =
+    player.cards[cardIndex];
 
-    }
+  if (
+    !canPlayCard(card)
+  ) {
+
+    return;
+
+  }
 
     sounds.play.currentTime = 0;
     sounds.play.play();
@@ -1149,12 +1159,22 @@ if (
   }
 
   /* =========================
-     DRAW CLICK
-  ========================= */
+   DRAW CLICK
+========================= */
 
-  drawPile.addEventListener(
+drawPile.addEventListener(
   "click",
   () => {
+
+    /* GAME OVER */
+
+    if (
+      gameState.winner
+    ) {
+
+      return;
+
+    }
 
     if (
       gameState.currentTurn !== 0
@@ -1213,7 +1233,28 @@ if (
 
     drawCard(player);
 
-    nextTurn();
+    /* CHECK DRAWN CARD */
+
+    const drawnCard =
+      player.cards[
+        player.cards.length - 1
+      ];
+
+    const playable =
+      canPlayCard(
+        drawnCard
+      );
+
+    renderEverything();
+
+    /* ONLY PASS TURN
+       IF NOT PLAYABLE */
+
+    if (!playable) {
+
+      nextTurn();
+
+    }
 
   }
 );

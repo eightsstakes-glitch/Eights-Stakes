@@ -658,3 +658,63 @@ select.input {
   }
 
 }
+
+/* =========================
+   SELECT DROPDOWN
+========================= */
+
+select {
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 100%;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  color: white;
+
+  padding:
+    16px 20px;
+
+  border-radius: 20px;
+
+  font-size: 1rem;
+
+  outline: none;
+
+  backdrop-filter:
+    blur(12px);
+
+  transition:
+    0.25s ease;
+
+}
+
+select:focus {
+
+  border-color:
+    #8b5cf6;
+
+  box-shadow:
+    0 0 20px
+    rgba(139,92,246,0.4);
+
+}
+
+/* OPTIONS */
+
+select option {
+
+  background:
+    #151522;
+
+  color:
+    white;
+
+}

@@ -403,14 +403,221 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   }
 
-  /* =========================
-     PLAY CARD
-  ========================= */
+ /* =========================
+   PLAY CARD
+========================= */
 
-  async function playCard(
-    index,
-    chosenSuit = null
+async function playCard(
+  index,
+  chosenSuit = null
+) {
+
+  /* GAME OVER */
+
+  if (
+    gameState.winner_id
   ) {
+
+    return;
+
+  }
+
+  if (
+    gameState.current_turn !==
+    currentUser.id
+  ) {
+
+    return;
+
+  }
+
+  const card =
+    myCards[index];
+
+  if (!card)
+    return;
+
+  if (
+    !canPlayCard(card)
+  ) {
+
+    return;
+
+  }
+
+  /* WILD PICKER */
+
+  if (
+    card.type === "wild" &&
+    !chosenSuit
+  ) {
+
+    pendingWildCard = index;
+
+    suitPicker.style.display =
+      "flex";
+
+    return;
+
+  }
+
+  /* REMOVE CARD */
+
+  myCards.splice(
+    index,
+    1
+  );
+
+  /* SAVE CARDS */
+
+  await supabase
+    .from("player_cards")
+    .update({
+
+      cards: myCards
+
+    })
+    .eq(
+      "room_id",
+      room.id
+    )
+    .eq(
+      "player_id",
+      currentUser.id
+    );
+
+  /* EFFECTS */
+
+  let direction =
+    gameState.direction || 1;
+
+  let drawStack =
+    gameState.draw_stack || 0;
+
+  let skips = 1;
+
+  /* REVERSE */
+
+  if (
+    card.type === "reverse"
+  ) {
+
+    /* 1V1 = SKIP */
+
+    if (
+      players.length === 2
+    ) {
+
+      skips = 2;
+
+    }
+
+    else {
+
+      direction *= -1;
+
+    }
+
+  }
+
+  /* SKIP */
+
+  if (
+    card.type === "skip"
+  ) {
+
+    skips = 2;
+
+  }
+
+  if (
+    card.type === "draw2"
+  ) {
+
+    drawStack += 2;
+
+  }
+
+  if (
+    card.type === "joker"
+  ) {
+
+    drawStack += 4;
+
+  }
+
+  if (
+    card.type === "burn"
+  ) {
+
+    skips = 0;
+
+  }
+
+  const nextPlayer =
+    getNextPlayer(skips);
+
+  /* WIN */
+
+  let winnerId = null;
+
+  if (
+    myCards.length <= 0
+  ) {
+
+    winnerId =
+      currentUser.id;
+
+  }
+
+  /* UPDATE GAME */
+
+  await supabase
+    .from("game_state")
+    .update({
+
+      current_card: card,
+
+      current_suit:
+        chosenSuit ||
+        card.suit,
+
+      current_turn:
+        nextPlayer.player_id,
+
+      direction,
+
+      draw_stack:
+        drawStack,
+
+      winner_id:
+        winnerId
+
+    })
+    .eq(
+      "room_id",
+      room.id
+    );
+
+}
+
+   /* =========================
+   DRAW CARD
+========================= */
+
+drawPile.addEventListener(
+  "click",
+  async () => {
+
+    /* GAME OVER */
+
+    if (
+      gameState.winner_id
+    ) {
+
+      return;
+
+    }
 
     if (
       gameState.current_turn !==
@@ -421,44 +628,79 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
-    const card =
-      myCards[index];
-
-    if (!card)
-      return;
+    /* STACK RESPONSE */
 
     if (
-      !canPlayCard(card)
+      gameState.draw_stack > 0
     ) {
 
-      return;
+      const canRespond =
+        myCards.some(card =>
+
+          card.type === "draw2" ||
+
+          card.type === "joker"
+
+        );
+
+      /* MUST RESPOND */
+
+      if (
+        canRespond
+      ) {
+
+        return;
+
+      }
 
     }
 
-    /* WILD PICKER */
+    let pile =
+      gameState.draw_pile || [];
+
+    /* RESHUFFLE */
 
     if (
-      card.type === "wild" &&
-      !chosenSuit
+      pile.length <= 0
     ) {
 
-      pendingWildCard = index;
-
-      suitPicker.style.display =
-        "flex";
-
-      return;
+      pile = [
+        ...(gameState.discard_pile || [])
+      ];
 
     }
 
-    /* REMOVE CARD */
+    let amount = 1;
 
-    myCards.splice(
-      index,
-      1
-    );
+    if (
+      gameState.draw_stack > 0
+    ) {
 
-    /* SAVE CARDS */
+      amount =
+        gameState.draw_stack;
+
+    }
+
+    /* DRAW */
+
+    for (
+      let i = 0;
+      i < amount;
+      i++
+    ) {
+
+      const drawn =
+        pile.pop();
+
+      if (drawn) {
+
+        myCards.push(
+          drawn
+        );
+
+      }
+
+    }
 
     await supabase
       .from("player_cards")
@@ -476,227 +718,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         currentUser.id
       );
 
-    /* EFFECTS */
+    /* CHECK PLAYABLE */
 
-    let direction =
-      gameState.direction || 1;
+    const lastDrawn =
+      myCards[
+        myCards.length - 1
+      ];
 
-    let drawStack =
-      gameState.draw_stack || 0;
-
-    let skips = 1;
-
-/* REVERSE */
-
-if (
-  card.type === "reverse"
-) {
-
-  /* 1V1 = SKIP */
-
-  if (
-    players.length === 2
-  ) {
-
-    skips = 2;
-
-  }
-
-  else {
-
-    direction *= -1;
-
-  }
-
-}
-
-/* SKIP */
-
-if (
-  card.type === "skip"
-) {
-
-  skips = 2;
-
-}
-
-    if (
-      card.type === "draw2"
-    ) {
-
-      drawStack += 2;
-
-    }
-
-    if (
-      card.type === "joker"
-    ) {
-
-      drawStack += 4;
-
-    }
-
-    if (
-      card.type === "burn"
-    ) {
-
-      skips = 0;
-
-    }
-
-    const nextPlayer =
-      getNextPlayer(skips);
-
-    /* WIN */
-
-    let winnerId = null;
-
-    if (
-      myCards.length <= 0
-    ) {
-
-      winnerId =
-        currentUser.id;
-
-    }
-
-    /* UPDATE GAME */
-
-    await supabase
-      .from("game_state")
-      .update({
-
-        current_card: card,
-
-        current_suit:
-          chosenSuit ||
-          card.suit,
-
-        current_turn:
-          nextPlayer.player_id,
-
-        direction,
-
-        draw_stack:
-          drawStack,
-
-        winner_id:
-          winnerId
-
-      })
-      .eq(
-        "room_id",
-        room.id
+    const canStillPlay =
+      canPlayCard(
+        lastDrawn
       );
 
-  }
+    /* ONLY END TURN
+       IF NO PLAY */
 
-    /* =========================
-     DRAW CARD
-  ========================= */
-
-  drawPile.addEventListener(
-    "click",
-    async () => {
-
-      if (
-        gameState.current_turn !==
-        currentUser.id
-      ) {
-
-        return;
-
-      }
-
-      /* STACK RESPONSE */
-
-      if (
-        gameState.draw_stack > 0
-      ) {
-
-        const canRespond =
-          myCards.some(card =>
-
-            card.type === "draw2" ||
-
-            card.type === "joker"
-
-          );
-
-        /* MUST RESPOND */
-
-        if (
-          canRespond
-        ) {
-
-          return;
-
-        }
-
-      }
-
-      let pile =
-        gameState.draw_pile || [];
-
-      /* RESHUFFLE */
-
-      if (
-        pile.length <= 0
-      ) {
-
-        pile = [
-          ...(gameState.discard_pile || [])
-        ];
-
-      }
-
-      let amount = 1;
-
-      if (
-        gameState.draw_stack > 0
-      ) {
-
-        amount =
-          gameState.draw_stack;
-
-      }
-
-      /* DRAW */
-
-      for (
-        let i = 0;
-        i < amount;
-        i++
-      ) {
-
-        const drawn =
-          pile.pop();
-
-        if (drawn) {
-
-          myCards.push(
-            drawn
-          );
-
-        }
-
-      }
-
-      await supabase
-        .from("player_cards")
-        .update({
-
-          cards: myCards
-
-        })
-        .eq(
-          "room_id",
-          room.id
-        )
-        .eq(
-          "player_id",
-          currentUser.id
-        );
+    if (!canStillPlay) {
 
       const nextPlayer =
         getNextPlayer();
@@ -719,7 +756,29 @@ if (
         );
 
     }
-  );
+
+    /* KEEP TURN */
+
+    else {
+
+      await supabase
+        .from("game_state")
+        .update({
+
+          draw_pile: pile,
+
+          draw_stack: 0
+
+        })
+        .eq(
+          "room_id",
+          room.id
+        );
+
+    }
+
+  }
+);
 
   /* =========================
      SUIT PICKER
@@ -981,6 +1040,100 @@ if (
     renderWinner();
 
   }
+
+  /* =========================
+   LEAVE GAME
+========================= */
+
+const leaveBtn =
+  document.getElementById(
+    "leave-btn"
+  );
+
+leaveBtn.addEventListener(
+  "click",
+  async () => {
+
+    try {
+
+      /* REMOVE PLAYER */
+
+      await supabase
+        .from("room_players")
+        .delete()
+        .eq(
+          "room_id",
+          room.id
+        )
+        .eq(
+          "player_id",
+          currentUser.id
+        );
+
+      /* REMOVE CARDS */
+
+      await supabase
+        .from("player_cards")
+        .delete()
+        .eq(
+          "room_id",
+          room.id
+        )
+        .eq(
+          "player_id",
+          currentUser.id
+        );
+
+      /* HOST CLEANUP */
+
+      if (
+        room.host_id ===
+        currentUser.id
+      ) {
+
+        await supabase
+          .from("game_state")
+          .delete()
+          .eq(
+            "room_id",
+            room.id
+          );
+
+        await supabase
+          .from("rooms")
+          .delete()
+          .eq(
+            "id",
+            room.id
+          );
+
+      }
+
+      /* CLEAR STORAGE */
+
+      localStorage.removeItem(
+        "roomCode"
+      );
+
+      /* REDIRECT */
+
+      window.location.href =
+        "multiplayer-lobby.html";
+
+    }
+
+    catch (err) {
+
+      console.error(err);
+
+      alert(
+        err.message
+      );
+
+    }
+
+  }
+);
 
   /* =========================
      REALTIME
