@@ -885,17 +885,15 @@ if (
   card.type === "reverse"
 ) {
 
-  /* 1V1 = PLAY AGAIN */
+  /* 1V1 = SAME PLAYER */
 
   if (
     gameState.players.length === 2
   ) {
 
-    renderEverything();
+    gameState.direction *= -1;
 
-    updateTurnUI();
-
-    return;
+    skipNext = true;
 
   }
 
@@ -1244,21 +1242,23 @@ drawPile.addEventListener(
         player.cards.length - 1
       ];
 
-    const playable =
-      canPlayCard(
-        drawnCard
-      );
+renderEverything();
 
-    renderEverything();
+/* PLAYABLE */
 
-    /* ONLY PASS TURN
-       IF NOT PLAYABLE */
+if (
+  canPlayCard(
+    drawnCard
+  )
+) {
 
-    if (!playable) {
+  return;
 
-      nextTurn();
+}
 
-    }
+/* END TURN */
+
+nextTurn();
 
   }
 );

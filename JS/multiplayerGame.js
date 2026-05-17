@@ -502,19 +502,15 @@ if (
   card.type === "reverse"
 ) {
 
-  /* 1V1 = PLAY AGAIN */
+  direction *= -1;
+
+  /* 1V1 = SAME PLAYER */
 
   if (
     players.length === 2
   ) {
 
-    skips = 0;
-
-  }
-
-  else {
-
-    direction *= -1;
+    skips = 2;
 
   }
 
