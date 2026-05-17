@@ -656,26 +656,27 @@ drawPile.addEventListener(
 
     /* RESHUFFLE */
 
-    if (
-      pile.length <= 0
-    ) {
+if (
+  pile.length <= 0
+) {
 
-      pile = [
-        ...(gameState.discard_pile || [])
-      ];
+  const discard =
+    [
+      ...(gameState.discard_pile || [])
+    ];
 
-    }
+  /* KEEP TOP CARD */
 
-    let amount = 1;
+  discard.pop();
 
-    if (
-      gameState.draw_stack > 0
-    ) {
+  /* SHUFFLE */
 
-      amount =
-        gameState.draw_stack;
+  pile =
+    shuffleDeck(
+      discard
+    );
 
-    }
+}
 
     /* DRAW */
 
