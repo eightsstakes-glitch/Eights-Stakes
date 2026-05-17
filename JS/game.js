@@ -885,13 +885,17 @@ if (
   card.type === "reverse"
 ) {
 
-  /* 1V1 = SKIP */
+  /* 1V1 = PLAY AGAIN */
 
   if (
     gameState.players.length === 2
   ) {
 
-    skipNext = true;
+    renderEverything();
+
+    updateTurnUI();
+
+    return;
 
   }
 

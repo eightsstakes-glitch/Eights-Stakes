@@ -496,29 +496,29 @@ async function playCard(
 
   let skips = 1;
 
-  /* REVERSE */
+ /* REVERSE */
+
+if (
+  card.type === "reverse"
+) {
+
+  /* 1V1 = PLAY AGAIN */
 
   if (
-    card.type === "reverse"
+    players.length === 2
   ) {
 
-    /* 1V1 = SKIP */
-
-    if (
-      players.length === 2
-    ) {
-
-      skips = 2;
-
-    }
-
-    else {
-
-      direction *= -1;
-
-    }
+    skips = 0;
 
   }
+
+  else {
+
+    direction *= -1;
+
+  }
+
+}
 
   /* SKIP */
 
